@@ -37,7 +37,16 @@ module.exports = function(grunt) {
           banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
           mangle: false
       },
-      
+      lib: {
+          src: '<%= concat.lib.dest %>',
+          dest: 'public/dist/<%= pkg.name %>-lib.min.js'
+      },
+      client: {
+        files: {
+          src: '<%= concat.client.dest %>',
+          dest: 'public/dist/<%= pkg.name %>-client.min.js'
+        }
+      }
     },
 
     jshint: {
