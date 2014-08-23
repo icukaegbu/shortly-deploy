@@ -20,12 +20,35 @@ module.exports = function(grunt) {
       }
     },
 
+    concat: {
+      options: {
+        separator: ';'
+      },
+      build: {
+        src: ['app/**/*.js', 'lib/*.js', 'public/lib/*.js'],
+        dest: 'tmp/js/<%= pkg.name %>.js'
+      }
+    },
+
     uglify: {
+      build: {
+          src: 'tmp/js/<%= pkg.name %>.js',
+          dest: 'public/dist/production.min.js'
+      }
+
+      // build: {
+      //   files: {
+      //     'tmp/js/<%= pkg.name %>.min.js': ['<%= concat.build.dest %>']
+      //   }
+      // }
     },
 
     jshint: {
       files: [
-        // Add filespec list here
+        files: [
+          'grunt.js',
+          'prod/scripts/**.js'
+        ]
       ],
       options: {
         force: 'true',
@@ -60,7 +83,7 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
       }
-    },
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -106,7 +129,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'concat'
   ]);
+
+  //grunt.registerTask('default', ['concat']);
 
 
 };
