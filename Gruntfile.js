@@ -51,8 +51,11 @@ module.exports = function(grunt) {
 
     jshint: {
       files: [
-        'grunt.js',
-        'prod/scripts/**.js'
+        'app/**/*.js',
+        'lib/**/*.js',
+        'public/**/*.js',
+        'test/**/*.js',
+        'views/**/*.js'
       ],
       options: {
         force: 'true',
@@ -65,6 +68,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      combine: {
+        files: {
+          'public/<%= pkg.name %>.min.css': ['public/*.css']
+        }
+      }
     },
 
     watch: {
@@ -72,6 +80,7 @@ module.exports = function(grunt) {
         files: [
           'public/client/**/*.js',
           'public/lib/**/*.js',
+          'Gruntfile.js'
         ],
         tasks: [
           'concat',
@@ -86,6 +95,12 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        options: {},
+        command: [
+          'git add .',
+          'git commit -m "Upload from grunt"',
+          'git push azure master' 
+        ].join('&&')
       }
     }
   });
