@@ -42,10 +42,8 @@ module.exports = function(grunt) {
           dest: 'public/dist/<%= pkg.name %>-lib.min.js'
       },
       client: {
-        files: {
           src: '<%= concat.client.dest %>',
           dest: 'public/dist/<%= pkg.name %>-client.min.js'
-        }
       }
     },
 
@@ -158,7 +156,7 @@ module.exports = function(grunt) {
     'upload'
   ]);
 
-  //grunt.registerTask('default', ['concat']);
+  grunt.registerTask('default', ['deploy']);
 
 
 };
