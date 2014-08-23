@@ -3,6 +3,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
+      lib: {
+        src: ['public/lib/*.js'],
+        dest: 'public/dist/<%= pkg.name %>-lib.js'
+      },
+      client: {
+        src: ['public/client/**/*.js'],
+        dest: 'public/dist/<%= pkg.name %>-client.js'
+      }
     },
 
     mochaTest: {
@@ -20,35 +31,19 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      options: {
-        separator: ';'
-      },
-      build: {
-        src: ['app/**/*.js', 'lib/*.js', 'public/lib/*.js'],
-        dest: 'tmp/js/<%= pkg.name %>.js'
-      }
-    },
-
     uglify: {
-      build: {
-          src: 'tmp/js/<%= pkg.name %>.js',
-          dest: 'public/dist/production.min.js'
-      }
-
-      // build: {
-      //   files: {
-      //     'tmp/js/<%= pkg.name %>.min.js': ['<%= concat.build.dest %>']
-      //   }
-      // }
+      options: {
+          // the banner is inserted at the top of the output
+          banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+          mangle: false
+      },
+      
     },
 
     jshint: {
       files: [
-        files: [
-          'grunt.js',
-          'prod/scripts/**.js'
-        ]
+        'grunt.js',
+        'prod/scripts/**.js'
       ],
       options: {
         force: 'true',
