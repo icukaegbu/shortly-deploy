@@ -22,6 +22,8 @@ LinkSchema.pre('init', function(next){
   link.set('code', shasum.digest('hex').slice(0, 5));
 });
 
+//compile schema into model and export
+var Link = mongoose.model('Link', LinkSchema);
 
 module.exports = Link;
 
