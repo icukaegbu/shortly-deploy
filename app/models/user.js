@@ -13,7 +13,7 @@ var UserSchema = new Schema({
   updated_at: { type: Date, default: Date.now }
 });
 
-UserSchema.pre(save, function(next){
+UserSchema.pre('save', function(next){
   var user = this;
 
   if (user.isModified('password')){
