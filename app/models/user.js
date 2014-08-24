@@ -8,7 +8,9 @@ var Schema = mongoose.Schema;
 //user = mongoose.model('User', db.userSchema);
 var UserSchema = new Schema({
   username: { type: String, required: true, index: { unique: true} },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
 });
 
 UserSchema.pre(save, function(next){
