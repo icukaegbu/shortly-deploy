@@ -1,22 +1,48 @@
 var mongoose = require('mongoose');
-//replace with remote key
-mongoose.connect('mongodb://MongoLab:BCI_Hz44NHH5blCjbTpBeCmPpIXMdGSYg5jrP8jx1uA-@ds052827.mongolab.com:52827/MongoLab');
+
+if ( process.env.PORT ){
+	mongoose.connect('mongodb://MongoLab:BCI_Hz44NHH5blCjbTpBeCmPpIXMdGSYg5jrP8jx1uA-@ds052827.mongolab.com:52827/MongoLab');
+}
+else{
+	mongoose.connect('mongodb://admin:123456@localhost/shortly');
+}
+
+//console.log(mongoose.connection);
 
 var db = mongoose.connection;
 
-db.on('error', function(){
-  //can't connect to remote db, connect to local
-  mongoose.connect('mongodb://admin:123456@localhost/shortly');
-  db = mongoose.connection;
-
-  db.on('error', function(err){
+db.on('error', function(err){
     console.log(err);
-  });
 });
 
 db.once('open', function(){
   console.log('Connection successful');
 });
+
+//replace with remote key
+// mongoose.connect('mongodb://MongoLab:BCI_Hz44NHH5blCjbTpBeCmPpIXMdGSYg5jrP8jx1uA-@ds052827.mongolab.com:52827/MongoLab');
+
+// var db = mongoose.connection;
+
+// db.on('error', function(){
+//   //can't connect to remote db, connect to local
+//   mongoose.connect('mongodb://admin:123456@localhost/shortly');
+//   db = mongoose.connection;
+
+//   db.on('error', function(err){
+//     console.log(err);
+//   });
+// });
+
+// db.once('open', function(){
+//   console.log('Connection successful');
+// });
+
+// var checkPort= function(){
+// 	if ( process.env.PORT ){
+// 		return 
+// 	}
+// }
 
 module.exports = db;
 
