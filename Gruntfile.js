@@ -94,11 +94,12 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         options: {},
-        command: [
-          'git add .',
-          'git commit -m "Upload from grunt"',
-          'git push azure master' 
-        ].join('&&')
+        command: 'git add . && git commit -m "Upload from grunt" && git push azure master'
+        // command: [
+        //   'git add .',
+        //   'git commit -m "Upload from grunt"',
+        //   'git push azure master' 
+        // ].join('&&')
       }
     }
   });
