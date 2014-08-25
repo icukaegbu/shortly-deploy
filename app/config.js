@@ -1,15 +1,17 @@
 var mongoose = require('mongoose');
 //replace with remote key
-mongoose.connect('mongodb://localhost/shortlyDB');
+mongoose.connect('mongodb://root:9924013@localhost/shortly');
 
 var db = mongoose.connection;
 
 db.on('error', function(){
   //can't connect to remote db, connect to local
-  mongoose.connect('mongodb://localhost/shortlyDB');
+  mongoose.connect('mongodb://admin:123456@localhost/shortly');
   db = mongoose.connection;
 
-  db.on('error', console.log('Cannot connect to local db too'));
+  db.on('error', function(err){
+    console.log(err);
+  });
 });
 
 db.once('open', function(){
