@@ -15,15 +15,17 @@ var LinkSchema = new Schema({
 });
 
 LinkSchema.pre('save', function(next){
-  var link = this;
-
+  //var link = this;
+  console.log('In pre, creating hash');
   var shasum = crypto.createHash('sha1');
-  console.log(link.url);
-  shasum.update(link.url);
-  link.set('code', shasum.digest('hex').slice(0, 5));
-
-  // shasum.update(this.url);
-  // this.code = shasum.digest('hex').slice(0, 5);
+  console.log(this.url);
+  shasum.update(this.url);
+   console.log('In pre, digesting');
+  this.code = shasum.digest('hex').slice(0, 5);
+  console.log('After digesting: '+this.code);
+  next();
+  // shasum.update(link.get('url'));
+  // link.set('code', shasum.digest('hex').slice(0, 5));
 });
 
 //compile schema into model and export
