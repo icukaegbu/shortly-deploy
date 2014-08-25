@@ -15,18 +15,27 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next){
   var user = this;
-
+  console.log('Inside pre');
   if (user.isModified('password')){
     //hash password
-    user.hashPassword();
+    //user.hashPassword();
+    console.log('Inside hashing');
+    bcrypt.hash(user.password, null, null, function(err, hash) {
+      if (err) return next(err);
+
+      user.password = hash;
+      next();
+    });
   }else{
     next();
   }
 });
 
 UserSchema.methods.comparePassword = function(attemptedPassword, callback) {
-  bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
-    callback(isMatch);
+  console.log('In comparePassword. attemptedPassword: '+attemptedPassword+' --- Actual: '+this.password);
+  bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
+    console.log('compare result: '+isMatch);
+    callback(err, isMatch);
   });
 };
 
