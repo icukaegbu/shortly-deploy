@@ -14,12 +14,16 @@ var LinkSchema = new Schema({
   updated_at: { type: Date, default: Date.now }  
 });
 
-LinkSchema.pre('init', function(next){
+LinkSchema.pre('save', function(next){
   var link = this;
 
   var shasum = crypto.createHash('sha1');
-  shasum.update(link.get('url'));
+  console.log(link.url);
+  shasum.update(link.url);
   link.set('code', shasum.digest('hex').slice(0, 5));
+
+  // shasum.update(this.url);
+  // this.code = shasum.digest('hex').slice(0, 5);
 });
 
 //compile schema into model and export
