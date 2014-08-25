@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 //replace with remote key
-mongoose.connect('mongodb://root:9924013@localhost/shortly');
+mongoose.connect('mongodb://MongoLab:BCI_Hz44NHH5blCjbTpBeCmPpIXMdGSYg5jrP8jx1uA-@ds052827.mongolab.com:52827/MongoLab');
 
 var db = mongoose.connection;
 
